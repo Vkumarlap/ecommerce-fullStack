@@ -3,9 +3,9 @@ INSERT INTO product (
     price,
     name,
     availability,
-    releasedate,
+    releaseDate,
     description,
-    brand,
+    brAnd,
     category,
     quantity
 )

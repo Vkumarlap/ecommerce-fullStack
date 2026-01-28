@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Home from "./Home";
+import Home from "./Home"
 import axios from "axios";
 
 const Navbar = ({ onSelectCategory, onSearch }) => {
   const getInitialTheme = () => {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme ? storedTheme : "light-theme";
-  };
+  }; 
 
   const [theme, setTheme] = useState(getInitialTheme());
-
   const toggleTheme = () => {
     const newTheme = theme === "dark-theme" ? "light-theme" : "dark-theme";
     setTheme(newTheme);
@@ -20,14 +19,15 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     document.body.className = theme;
   }, [theme]);
 
+  
   return (
     <>
       <header>
         <nav className="navbar navbar-expand-lg fixed-top">
           <div className="container-fluid">
-            <h1>
+            <a className="navbar-brand" href="https://github.com/Vkumarlap">
               Vkumar
-            </h1>
+            </a>
             <button
               className="navbar-toggler"
               type="button"
@@ -56,15 +56,17 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                 </li>
 
                 {/* < className="nav-item dropdown"> */}
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Categories
-                </a>
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="/"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Categories
+                  </a>
+
+                
 
                 <li className="nav-item"></li>
               </ul>
@@ -76,20 +78,20 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                 )}
               </button>
               <div className="d-flex align-items-center cart">
-                {/* <a href="/cart" className="nav-link text-dark"> */}
-                <i
-                  className="bi bi-cart me-2"
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  Cart
-                </i>
-                {/* </a> */}
-
+                <a href="/cart" className="nav-link text-dark">
+                  <i
+                    className="bi bi-cart me-2"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    Cart
+                  </i>
+                </a>
+              
                 <input
                   className="form-control me-2"
                   type="search"
                   placeholder="Search"
-                  aria-label="Search"
+                  aria-label="Search"                
                 />
                 <div />
               </div>

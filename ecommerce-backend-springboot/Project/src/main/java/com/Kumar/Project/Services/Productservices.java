@@ -15,14 +15,18 @@ public class Productservices {
     Productservices(Productrepo repo){
         this.repo=repo;
     }
-public List<Product> getproducts()         {return repo.findAll();}
-public Product getProductByid(int pid)     {return repo.findById(pid).orElse(new Product());}
+public List<Product> getproducts()  {return repo.findAll();}
+
+public Product getProductByid(int id)     {return repo.findById(id).orElse(null);} //returning null is not a good idea 
+
 public void deleteproduct(int pid) 
 {  if(!repo.existsById(pid))
     throw new RuntimeException("Product not found for id"+pid);
     else
     repo.deleteById(pid);}
+
  public void addproduct(Product product)   {repo.save(product);}
+
   public void updateproduct(Product product ){repo.save(product);}
 
     
