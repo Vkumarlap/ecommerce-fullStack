@@ -20,12 +20,12 @@ import com.Kumar.Project.Services.Productservices;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin
 public class Productcontroller {
   //  @Autowired
    Productservices service;
       
-Productcontroller(Productservices service)
+public Productcontroller(Productservices service)
 {
     this.service=service;
 }
@@ -35,17 +35,19 @@ Productcontroller(Productservices service)
         
         return new ResponseEntity<>( service.getproducts(),HttpStatus.OK);
     }
-     
-    @GetMapping("/products/{id}")
+
+
+@GetMapping("/products/{id}")
     public ResponseEntity< Product> getprProductbyid(@PathVariable int id){
           Product product=service.getProductByid(id);
           if(product!=null){
-        return new ResponseEntity<>(product,HttpStatus.FOUND);}
+        return new ResponseEntity<>(product,HttpStatus.OK);}
     else 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
-     
+    
+
     @PostMapping
     public void addproduct( @RequestBody Product product){service.addproduct(product);}
 
