@@ -41,7 +41,7 @@ public Productcontroller(Productservices service)
     }
 
 
-@GetMapping("/products/{id}")
+@GetMapping("/product/{id}")
     public ResponseEntity< Product> getprProductbyid(@PathVariable int id){
           Product product=service.getProductByid(id);
           if(product!=null){
@@ -62,6 +62,20 @@ public Productcontroller(Productservices service)
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+     @GetMapping("/product/{id}/image")
+    public ResponseEntity<byte[]> getimgagebyproductid(@PathVariable int id)
+    {     
+            Product product=service.getProductByid(id);
+            byte[] imageFile=product.getImageDate();
+
+            if (product.getId() > 0) {
+            return new ResponseEntity<>(imageFile, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+          
     }
     
 

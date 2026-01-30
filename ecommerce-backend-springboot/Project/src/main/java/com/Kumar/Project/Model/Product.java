@@ -27,11 +27,11 @@ public class Product {
     private String name;
     private boolean availability;
    // @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
-    private Date releasedate;
-    private String  Description;
+    private Date releaseDate;
+    private String  description;
     private String brand;
     private String category;
-    private int Quantity;
+    private int stockQuantity;
 
     private String imageName;
     private String imageType;
