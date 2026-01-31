@@ -5,12 +5,12 @@ const AddProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     brand: "",
-    desc: "",
+    description: "",
     price: "",
     category: "",
     stockQuantity: "",
     releaseDate: "",
-    available: false,
+    productAvailable: false,
   });
   const [image, setImage] = useState(null);
 
@@ -88,10 +88,10 @@ const AddProduct = () => {
             type="text"
             className="form-control"
             placeholder="Add product description"
-            value={product.desc}
-            name="desc"
+            value={product.description}
+            name="description"
             onChange={handleInputChange}
-            id="desc"
+            id="description"
           />
         </div>
         <div className="col-5">
@@ -175,11 +175,11 @@ const AddProduct = () => {
             <input
               className="form-check-input"
               type="checkbox"
-              name="available"
+              name="productAvailable"
               id="gridCheck"
-              checked={product.available}
+              checked={product.productAvailable}
               onChange={(e) =>
-                setProduct({ ...product, available: e.target.checked })
+                setProduct({ ...product, productAvailable: e.target.checked })
               }
             />
             <label className="form-check-label">Product Available</label>

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.codec.CodecConfigurer.MultipartCodecs;
+// import org.springframework.http.codec.CodecConfigurer.MultipartCodecs;
 import org.springframework.web.bind.annotation.CrossOrigin;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,11 +79,38 @@ public Productcontroller(Productservices service)
     }
     
 
+     @PutMapping("/product/{id}")
+     public ResponseEntity<String> updateproduct( @PathVariable int id,@RequestPart Product product,@RequestPart MultipartFile imageFile){
+    Product product1;
+    try{
+        product1 =service.updateproduct(id,product,imageFile);
 
-    // @DeleteMapping("/products/{id}")
-    // public void deleteproduct( @PathVariable int id){service.deleteproduct(id);}
+    }
+    catch(IOException e){
+        return new ResponseEntity<>("failed to update",HttpStatus.BAD_REQUEST);
+    }
+     if(product1!=null)
+            return new ResponseEntity<>("Updated !",HttpStatus.OK);
+        else
+            return new ResponseEntity<>("failed to update !!!",HttpStatus.NOT_FOUND);
+    }
 
-    //  @PutMapping
-    //  public void updateproduct( @RequestBody Product product){service.addproduct(product);}
+
+
+    
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<String> deleteproduct( @PathVariable int id){
+        
+        try{
+            service.deleteproduct(id);
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
+    }
+
+  catch(RuntimeException e)
+  {
+    return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+  }
+        }
 
 }
