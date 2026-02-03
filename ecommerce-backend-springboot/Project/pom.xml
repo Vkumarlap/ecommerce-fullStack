@@ -33,6 +33,12 @@
 	<dependencies>
 
 
+<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+
 
 <!-- Source: https://mvnrepository.com/artifact/com.h2database/h2 -->
 <dependency>

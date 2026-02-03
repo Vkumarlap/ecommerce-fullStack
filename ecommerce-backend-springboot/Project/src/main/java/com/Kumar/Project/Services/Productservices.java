@@ -45,6 +45,10 @@ public Product getProductByid(int id)     {return repo.findById(id).orElse(null)
 
 
 }
+public List<Product> searchProducts(String keyword){
+
+    return repo.searchProducts(keyword);
+}
 
     
 }

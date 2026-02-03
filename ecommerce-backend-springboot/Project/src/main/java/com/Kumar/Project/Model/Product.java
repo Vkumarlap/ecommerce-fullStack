@@ -28,7 +28,7 @@ public class Product {
     private boolean availability;
    // @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
     private Date releasedate;
-    private String  description;
+    private String  desc;
     private String brand;
     private String category;
     private int Quantity;
