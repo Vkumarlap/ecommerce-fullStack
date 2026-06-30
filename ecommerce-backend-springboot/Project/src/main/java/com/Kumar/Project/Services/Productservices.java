@@ -21,11 +21,11 @@ public List<Product> getproducts()  {return repo.findAll();}
 public Product getProductByid(int id)     {return repo.findById(id).orElse(null);} //returning null is not a good idea 
 
 
- public Product addproduct(Product product,MultipartFile imageFile) throws IOException{
+ public Product addproduct(Product product/*,MultipartFile imageFile*/) /*throws IOException*/{
     
-    product.setImageName(imageFile.getOriginalFilename()); //here we are setting image name type and data
-    product.setImageType(imageFile.getContentType());
-    product.setImageDate(imageFile.getBytes());
+    // product.setImageName(imageFile.getOriginalFilename()); //here we are setting image name type and data
+    // product.setImageType(imageFile.getContentType());
+    // product.setImageDate(imageFile.getBytes());
    return  repo.save(product);}
 
 

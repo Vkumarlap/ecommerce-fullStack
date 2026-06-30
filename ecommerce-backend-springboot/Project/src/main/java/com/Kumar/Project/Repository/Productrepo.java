@@ -10,10 +10,10 @@ import com.Kumar.Project.Model.Product;
 @Repository
 public interface Productrepo extends JpaRepository<Product,Integer> {
 
-      @Query("SELECT p from Product p WHERE " +
+      @Query(value="SELECT p from Product p WHERE " +
             "LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(p.desc) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(p.brand) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(p.category) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+            "LOWER(p.category) LIKE LOWER(CONCAT('%',:keyword, '%'))",nativeQuery=true)
     List<Product> searchProducts(String keyword);
 } 

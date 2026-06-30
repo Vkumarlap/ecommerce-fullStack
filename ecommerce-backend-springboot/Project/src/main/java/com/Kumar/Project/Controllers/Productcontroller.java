@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,14 +55,14 @@ public Productcontroller(Productservices service)
     
 
     @PostMapping("/product")
-    public ResponseEntity<?> addProduct(@RequestPart Product product, @RequestPart MultipartFile imageFile) {
+    public ResponseEntity<?> addProduct(@RequestBody Product product/* , @RequestPart MultipartFile imageFile*/) {
         Product savedProduct = null;
-        try {
-            savedProduct = service.addproduct(product, imageFile);
-            return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
-        } catch (IOException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        // try {
+            savedProduct = service.addproduct(product/* , imageFile*/);
+            return new ResponseEntity<>(savedProduct, HttpStatus.OK);
+        // } catch (IOException e) {
+        //     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        // }
 
     }
      @GetMapping("/product/{id}/image")

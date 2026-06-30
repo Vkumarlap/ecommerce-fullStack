@@ -4,10 +4,10 @@ INSERT INTO product (
     name,
     availability,
     releaseDate,
-    description,
-    brAnd,
+    desc,
+    brand,
     category,
-    quantity
+    Quantity
 )
 VALUES
     ( 24999.99, 'Smartphone', TRUE,  '2026-01-10', '5G Android phone, 128GB', 'Samsung', 'Electronics', 50),
