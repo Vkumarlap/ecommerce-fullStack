@@ -3,7 +3,7 @@ package com.Kumar.Project.Model;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-// import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,13 +25,13 @@ public class Product {
     private int id;
     private BigDecimal price;
     private String name;
-    private boolean availability;
-   // @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
+    private Boolean availability;
+   @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
     private Date releasedate;
-    private String  desc;
+    private String  description;
     private String brand;
     private String category;
-    private int Quantity;
+    private Integer Quantity;
 
     private String imageName;
     private String imageType;

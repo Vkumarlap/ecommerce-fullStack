@@ -20,14 +20,18 @@ public List<Product> getproducts()  {return repo.findAll();}
 
 public Product getProductByid(int id)     {return repo.findById(id).orElse(null);} //returning null is not a good idea 
 
-
- public Product addproduct(Product product/*,MultipartFile imageFile*/) /*throws IOException*/{
-    
-    // product.setImageName(imageFile.getOriginalFilename()); //here we are setting image name type and data
-    // product.setImageType(imageFile.getContentType());
-    // product.setImageDate(imageFile.getBytes());
-   return  repo.save(product);}
-
+public Product addproduct(Product product, MultipartFile imageFile) throws IOException {
+    if (imageFile != null && !imageFile.isEmpty()) {
+        String type = imageFile.getContentType();
+        if (type == null || !type.startsWith("image/")) {
+            throw new IllegalArgumentException("Only image files are allowed");
+        }
+        product.setImageName(imageFile.getOriginalFilename());
+        product.setImageType(type);
+        product.setImageDate(imageFile.getBytes());
+    }
+    return repo.save(product);
+}
 
 
    public void deleteproduct(int pid) 
@@ -36,14 +40,56 @@ public Product getProductByid(int id)     {return repo.findById(id).orElse(null)
     else
     repo.deleteById(pid);}
 
-  public Product updateproduct(int id,Product product ,MultipartFile imageFile )throws IOException{
-    
-    product.setImageName(imageFile.getOriginalFilename()); //here we are setting image name type and data
-    product.setImageType(imageFile.getContentType());
-    product.setImageDate(imageFile.getBytes());
-    return repo.save(product);
+  public Product updateproduct(
+        int id,
+        Product product,
+        MultipartFile imageFile) throws IOException {
 
+    Product existingProduct = repo.findById(id).orElse(null);
 
+    if (existingProduct == null) {
+        return null;
+    }
+
+    if (product.getPrice() != null) {
+        existingProduct.setPrice(product.getPrice());
+    }
+
+    if (product.getName() != null) {
+        existingProduct.setName(product.getName());
+    }
+
+    if (product.getDescription() != null) {
+        existingProduct.setDescription(product.getDescription());
+    }
+
+    if (product.getBrand() != null) {
+        existingProduct.setBrand(product.getBrand());
+    }
+
+    if (product.getCategory() != null) {
+        existingProduct.setCategory(product.getCategory());
+    }
+
+    if (product.getReleasedate() != null) {
+        existingProduct.setReleasedate(product.getReleasedate());
+    }
+
+    if (product.getAvailability() != null) {
+        existingProduct.setAvailability(product.getAvailability());
+    }
+
+    if (product.getQuantity() != null) {
+        existingProduct.setQuantity(product.getQuantity());
+    }
+
+    if (imageFile != null && !imageFile.isEmpty()) {
+        existingProduct.setImageName(imageFile.getOriginalFilename());
+        existingProduct.setImageType(imageFile.getContentType());
+        existingProduct.setImageDate(imageFile.getBytes());
+    }
+
+    return repo.save(existingProduct);
 }
 public List<Product> searchProducts(String keyword){
 
