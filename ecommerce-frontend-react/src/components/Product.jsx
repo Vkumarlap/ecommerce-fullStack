@@ -13,9 +13,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/product/${id}`
-        );
+        const response = await axios.get(`/product/${id}`);
 
         setProduct(response.data);
 
@@ -30,7 +28,7 @@ const Product = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/product/${id}/image`,
+          `/product/${id}/image`,
           {
             responseType: "blob",
           }
@@ -47,9 +45,7 @@ const Product = () => {
 
   const deleteProduct = async () => {
     try {
-      await axios.delete(
-        `http://localhost:8080/api/product/${id}`
-      );
+      await axios.delete(`/product/${id}`);
 
       alert("Product deleted successfully");
 
