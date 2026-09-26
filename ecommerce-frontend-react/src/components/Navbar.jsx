@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../axios"; // axios instance that sends the JWT automatically
 
 const Navbar = ({ onSelectCategory, onSearch }) => {
@@ -9,6 +9,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme ? storedTheme : "light-theme";
   };
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [theme, setTheme] = useState(getInitialTheme());
   const [input, setInput] = useState("");
@@ -32,12 +33,15 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
 
   const handleChange = async (value) => {
     setInput(value);
+
     if (value.length >= 1) {
       setShowSearchResults(true);
+
       try {
         const response = await API.get(
           `/products/search?keyword=${encodeURIComponent(value)}`
         );
+
         setSearchResults(response.data);
         setNoResults(response.data.length === 0);
       } catch (error) {
@@ -56,7 +60,9 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
   };
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark-theme" ? "light-theme" : "dark-theme";
+    const newTheme =
+      theme === "dark-theme" ? "light-theme" : "dark-theme";
+
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
   };
@@ -65,9 +71,14 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     document.body.className = theme;
   }, [theme]);
 
-  // Go to the Logout page; that component performs the actual logout
   const handleLogoutClick = () => {
     navigate("/logout");
+  };
+
+  const handleSearchProductClick = (id) => {
+    setShowSearchResults(false);
+    setInput("");
+    navigate(`/product/${id}`);
   };
 
   const categories = [
@@ -84,9 +95,14 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
       <header>
         <nav className="navbar navbar-expand-lg fixed-top">
           <div className="container-fluid">
-            <a className="navbar-brand" href="https://github.com/Vkumarlap">
+
+            <a
+              className="navbar-brand"
+              href="https://github.com/Vkumarlap"
+            >
               Vkumar
             </a>
+
             <button
               className="navbar-toggler"
               type="button"
@@ -98,22 +114,34 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
+
             <div
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
+                {/* HOME */}
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="/">
+                  <Link
+                    className="nav-link active"
+                    to="/"
+                  >
                     Home
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/add_product">
-                    Add Product
-                  </a>
+                  </Link>
                 </li>
 
+                {/* ADD PRODUCT */}
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    to="/add_product"
+                  >
+                    Add Product
+                  </Link>
+                </li>
+
+                {/* CATEGORIES */}
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -130,7 +158,9 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                       <li key={category}>
                         <button
                           className="dropdown-item"
-                          onClick={() => handleCategorySelect(category)}
+                          onClick={() =>
+                            handleCategorySelect(category)
+                          }
                         >
                           {category}
                         </button>
@@ -141,43 +171,60 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
 
                 <li className="nav-item"></li>
               </ul>
-              <button className="theme-btn" onClick={() => toggleTheme()}>
+
+              {/* THEME BUTTON */}
+              <button
+                className="theme-btn"
+                onClick={() => toggleTheme()}
+              >
                 {theme === "dark-theme" ? (
                   <i className="bi bi-moon-fill"></i>
                 ) : (
                   <i className="bi bi-sun-fill"></i>
                 )}
               </button>
+
               <div className="d-flex align-items-center cart">
-                {/* <a href="/cart" className="nav-link text-dark">
-                  <i
-                    className="bi bi-cart me-2"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    Cart
-                  </i>
-                </a> */}
+
+                {/* SEARCH */}
                 <input
                   className="form-control me-2"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
                   value={input}
-                  onChange={(e) => handleChange(e.target.value)}
-                  onFocus={() => setSearchFocused(true)}
-                  onBlur={() => setSearchFocused(false)}
+                  onChange={(e) =>
+                    handleChange(e.target.value)
+                  }
+                  onFocus={() =>
+                    setSearchFocused(true)
+                  }
+                  onBlur={() =>
+                    setSearchFocused(false)
+                  }
                 />
+
+                {/* SEARCH RESULTS */}
                 {showSearchResults && (
                   <ul className="list-group">
+
                     {searchResults.length > 0
                       ? searchResults.map((result) => (
-                          <li key={result.id} className="list-group-item">
-                            <a
-                              href={`/product/${result.id}`}
+                          <li
+                            key={result.id}
+                            className="list-group-item"
+                          >
+                            <button
+                              type="button"
                               className="search-result-link"
+                              onClick={() =>
+                                handleSearchProductClick(
+                                  result.id
+                                )
+                              }
                             >
                               <span>{result.name}</span>
-                            </a>
+                            </button>
                           </li>
                         ))
                       : noResults && (
@@ -185,10 +232,11 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                             No Product with such Name
                           </p>
                         )}
+
                   </ul>
                 )}
 
-                {/* LOGOUT BUTTON */}
+                {/* LOGOUT */}
                 <button
                   className="btn btn-outline-danger ms-2"
                   type="button"
@@ -197,6 +245,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                   <i className="bi bi-box-arrow-right me-1"></i>
                   Logout
                 </button>
+
               </div>
             </div>
           </div>
