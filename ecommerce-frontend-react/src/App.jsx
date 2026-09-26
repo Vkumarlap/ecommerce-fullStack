@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
-import Cart from "./components/Cart";
 import AddProduct from "./components/AddProduct";
 import Product from "./components/Product";
 import Login from "./components/Login";
@@ -135,15 +134,7 @@ function App() {
             }
           />
 
-          {/* CART */}
-          <Route
-            path="/cart"
-            element={
-              <Protected loggedIn={loggedIn}>
-                <Cart />
-              </Protected>
-            }
-          />
+          
 
           {/* UPDATE PRODUCT */}
           <Route
