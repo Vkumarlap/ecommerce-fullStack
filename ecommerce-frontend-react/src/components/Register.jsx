@@ -26,11 +26,14 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // Sends: { "username": "...", "password": "..." }
-      await axios.post("/user/register", {
-        username,
-        password,
-      });
+      // Registration endpoint is outside /api
+      await axios.post(
+        "https://ecommerce-backend-wzhe.onrender.com/user/register",
+        {
+          username,
+          password,
+        }
+      );
 
       setSuccess(
         "Registration successful. Redirecting to sign in..."
@@ -88,9 +91,7 @@ const Register = () => {
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) =>
-            setUsername(e.target.value)
-          }
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
 
@@ -99,9 +100,7 @@ const Register = () => {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
 
@@ -133,9 +132,7 @@ const Register = () => {
           type="submit"
           disabled={loading}
         >
-          {loading
-            ? "Registering..."
-            : "Register"}
+          {loading ? "Registering..." : "Register"}
         </button>
 
         <div className="text-center mt-3">
